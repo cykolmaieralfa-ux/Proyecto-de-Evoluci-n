@@ -1,8 +1,8 @@
 # Proyecto-de-Evolución
-#Alumna: Kolmaier Caterin
-#Carrera: Recursos Digitales y marketing
+##Alumna: Kolmaier Caterin
+###Carrera: Recursos Digitales y marketing
 Proyecto académico sobre la evolución del desarrollo Front End, Back End e Inteligencia Artificial como soporte al desarrollo durante 2021-2025.
-## Descripción
+### Descripción
 
 Este proyecto académico analiza la evolución del desarrollo web durante el período 2021-2025, con énfasis en las tecnologías y herramientas utilizadas en Front End, Back End y en la Inteligencia Artificial como soporte al desarrollo.
 
