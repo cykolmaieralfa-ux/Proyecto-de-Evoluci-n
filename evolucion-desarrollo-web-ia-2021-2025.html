@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evolución del desarrollo web y la IA como soporte, 2021–2025</title>
+<meta name="description" content="Proyecto académico de Recursos Digitales: evolución del Front End, el Back End y la Inteligencia Artificial como soporte al desarrollo entre 2021 y 2025.">
+<style>
+:root{
+  --ink:#111827; --muted:#4B5563; --paper:#FFFFFF; --wash:#F3F4F6; --line:#D1D5DB;
+  --blue:#1E3A8A; --cyan:#06B6D4; --cyan-d:#0E7490; --cyan-bg:#ECFEFF;
+  --fe:#1E3A8A; --be:#B7791F; --be-t:#92400E; --ia:#0E7490; --slate:#6B7280; --slate-t:#374151;
+  --warn-bg:#FFF7E6; --warn-line:#B7791F;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6;font-size:17px;-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:.5rem 1rem;z-index:100}
+.skip:focus{left:0}
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.2;margin:0 0 .6rem;color:var(--ink)}
+h2{font-size:clamp(1.75rem,3.5vw,2.4rem);letter-spacing:-.01em}
+h3{font-size:1.4rem;margin-top:2.2rem}
+h4{font-size:1.1rem}
+p{margin:.6rem 0}
+.prose p,.prose li{max-width:70ch}
+.num{font-variant-numeric:tabular-nums}
+
+/* Navegación */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:1.25rem;min-height:56px}
+.brand{font-family:var(--serif);font-weight:700;color:var(--blue);text-decoration:none;white-space:nowrap;font-size:1.05rem}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:thin}
+.nav li a{display:block;padding:.45rem .7rem;color:var(--ink);text-decoration:none;font-size:.92rem;white-space:nowrap;border-radius:4px}
+.nav li a:hover{background:var(--wash)}
+.nav li a.on{background:var(--blue);color:#fff}
+
+/* Hero */
+.hero{background:var(--blue);color:#fff;padding:3.5rem 0 3rem}
+.hero h1{color:#fff;font-size:clamp(2rem,5vw,3.4rem);max-width:20ch;letter-spacing:-.02em;margin-bottom:1rem}
+.hero .lead{max-width:62ch;font-size:1.15rem;color:#E0E7FF}
+.legend-kinds{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;margin:1.5rem 0 0;padding:0;list-style:none;font-size:.92rem;color:#E0E7FF}
+.legend-kinds .tag{margin-right:.4rem}
+.map-title{font-family:var(--serif);font-size:1.3rem;margin:2.5rem 0 .25rem;color:#fff}
+.map-hint{font-size:.9rem;color:#C7D2FE;margin:0 0 .75rem}
+.map-scroll{overflow-x:auto;padding-bottom:.5rem}
+.map{display:grid;grid-template-columns:110px repeat(5,minmax(165px,1fr));gap:6px;min-width:960px}
+.map .yr{font-family:var(--serif);font-size:1.25rem;font-weight:700;padding:.25rem .5rem;color:#fff}
+.map .axis{padding:.7rem .5rem;font-weight:700;font-size:.95rem;display:flex;align-items:center;color:#fff;border-left:5px solid}
+.map .axis.fe{border-color:#93C5FD}.map .axis.be{border-color:#FCD34D}.map .axis.ia{border-color:#22D3EE}
+.map a.cell{display:block;padding:.65rem .75rem;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font-size:.88rem;line-height:1.4;border-radius:3px}
+.map a.cell:hover{background:rgba(255,255,255,.2);border-color:#fff}
+
+/* Secciones */
+section.sec{padding:4.25rem 0;border-bottom:1px solid var(--line)}
+section.alt{background:var(--wash)}
+.kicker{color:var(--muted);max-width:66ch;margin-bottom:1.5rem}
+.axis-tag{display:inline-block;width:.9rem;height:.9rem;border-radius:2px;margin-right:.5rem;vertical-align:baseline}
+
+/* Etiquetas y bloques */
+.tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;padding:.12rem .55rem;border-radius:3px;font-family:var(--sans);white-space:nowrap}
+.tag::before{font-size:.7rem}
+.tag-dato{border:1.5px solid var(--blue);color:var(--blue);background:#fff}.tag-dato::before{content:"■"}
+.tag-analisis{background:#CFFAFE;color:#155E75}.tag-analisis::before{content:"◆"}
+.tag-conclusion{background:var(--ink);color:#fff}.tag-conclusion::before{content:"●"}
+.tag-aviso{background:#FDE68A;color:#78350F}.tag-aviso::before{content:"▲"}
+.block{border-left:5px solid;padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 4px 4px 0}
+.block>.tag{margin-bottom:.5rem}
+.block ul{margin:.4rem 0 .2rem;padding-left:1.2rem}
+.block li{margin:.35rem 0}
+.b-dato{border-color:var(--blue);background:#fff}
+.b-analisis{border-color:var(--cyan);background:var(--cyan-bg)}
+.b-conclusion{border-color:var(--ink);background:#E5E7EB}
+.b-conclusion.dark{background:var(--ink);color:#fff}
+.b-conclusion.dark h4{color:#fff}
+.b-aviso{border-color:var(--warn-line);background:var(--warn-bg)}
+.split{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+/* Tarjetas de ejes */
+.axes{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:1.5rem 0}
+.axes a{display:block;padding:1.1rem 1.2rem;background:#fff;border:1px solid var(--line);border-top:5px solid;text-decoration:none;color:var(--ink);border-radius:0 0 4px 4px}
+.axes a:hover{background:var(--wash)}
+.axes a.fe{border-top-color:var(--fe)}.axes a.be{border-top-color:var(--be)}.axes a.ia{border-top-color:var(--cyan)}
+.axes strong{display:block;font-family:var(--serif);font-size:1.2rem;margin-bottom:.25rem}
+.axes span{font-size:.93rem;color:var(--muted)}
+
+/* Metodología */
+.flow{list-style:none;margin:1.5rem 0;padding:0;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));counter-reset:f}
+.flow li{counter-increment:f;background:#fff;border:1px solid var(--line);padding:1rem 1.1rem 1rem 3.2rem;position:relative;border-radius:4px}
+.flow li::before{content:counter(f);position:absolute;left:1rem;top:.9rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;display:grid;place-items:center;font-size:.9rem}
+.flow b{display:block;font-family:var(--serif);font-size:1.05rem}
+.flow span{font-size:.92rem;color:var(--muted)}
+
+/* Línea de tiempo */
+.tl{list-style:none;margin:1.5rem 0;padding:0}
+.tl>li{display:grid;grid-template-columns:84px 1fr;gap:1rem;padding:0 0 1.5rem;position:relative}
+.tl>li::before{content:"";position:absolute;left:41px;top:2.2rem;bottom:0;width:2px;background:var(--line)}
+.tl>li:last-child::before{display:none}
+.tl .y{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--blue);line-height:1.3}
+.tl .body{background:#fff;border:1px solid var(--line);padding:.9rem 1.1rem;border-radius:4px}
+.tl .body p{margin:.35rem 0;font-size:.97rem}
+.tl .body .tag{margin-right:.4rem}
+@media (max-width:600px){.tl>li{grid-template-columns:1fr}.tl>li::before{display:none}}
+
+/* Gráficos */
+.charts{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,470px),1fr));margin:1.5rem 0}
+figure.chart{margin:0;background:#fff;border:1px solid var(--line);padding:1.1rem 1.2rem;border-radius:4px;min-width:0}
+.ct{margin:0 0 .2rem;font-size:1.05rem}
+.cs{margin:0 0 .5rem;font-size:.9rem;color:var(--muted)}
+.plot{width:100%;min-height:80px}
+.plot svg{display:block;max-width:100%;overflow:visible}
+.plot svg text{font-family:var(--sans)}
+.pt{cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.88rem;margin:.4rem 0}
+.legend .sw{display:inline-block;width:.85rem;height:.85rem;margin-right:.4rem;vertical-align:-.1rem}
+.cn{font-size:.86rem;color:var(--muted);margin:.5rem 0 .3rem}
+.csrc{font-size:.82rem;color:var(--muted);margin:.2rem 0}
+.dt{margin-top:.6rem;font-size:.88rem}
+.dt summary{cursor:pointer;color:var(--blue);font-weight:600}
+.hg{margin:.4rem 0 1rem}
+.hg h5{margin:.9rem 0 .2rem;font-size:.95rem;font-family:var(--sans)}
+.hrow{display:grid;grid-template-columns:1fr;margin:.35rem 0}
+.hrow .hl{font-size:.9rem;margin-bottom:.1rem}
+.hrow .hb{display:flex;align-items:center;gap:.6rem}
+.hrow .trk{flex:1;background:var(--wash);height:18px;border-radius:2px;position:relative}
+.hrow .fill{height:100%;border-radius:2px}
+.hrow .hv{min-width:4.2rem;font-weight:700;font-variant-numeric:tabular-nums;font-size:.92rem}
+.hrow .none{position:absolute;left:.5rem;top:0;font-size:.78rem;color:var(--muted);line-height:18px;font-style:italic}
+
+/* Tablas */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:#fff;margin:1rem 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:.55rem .75rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{background:var(--wash);font-weight:700;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--muted)}
+caption{caption-side:top;text-align:left;font-weight:700;padding:.6rem .75rem;font-size:.92rem}
+
+/* Comparativa */
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}
+.tabs button{font:inherit;font-weight:700;padding:.5rem 1rem;border:1.5px solid var(--blue);background:#fff;color:var(--blue);border-radius:4px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--blue);color:#fff}
+.ycols{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.ycol{background:#fff;border:1px solid var(--line);border-top:5px solid;padding:1rem 1.1rem;border-radius:0 0 4px 4px}
+.ycol.fe{border-top-color:var(--fe)}.ycol.be{border-top-color:var(--be)}.ycol.ia{border-top-color:var(--cyan)}
+.ycol h4{margin-bottom:.4rem}
+.ycol ul{margin:0;padding-left:1.1rem;font-size:.95rem}
+.ycol li{margin:.3rem 0}
+
+/* Hallazgos */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}
+.chips button{font:inherit;font-size:.9rem;padding:.35rem .9rem;border:1.5px solid var(--ink);background:#fff;border-radius:99px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.cards{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-left:5px solid;padding:1rem 1.1rem;border-radius:0 4px 4px 0}
+.card.fe{border-left-color:var(--fe)}.card.be{border-left-color:var(--be)}.card.ia{border-left-color:var(--cyan)}
+.card .big{font-family:var(--serif);font-size:1.7rem;font-weight:700;line-height:1.15;margin-bottom:.3rem;font-variant-numeric:tabular-nums}
+.card p{font-size:.93rem;margin:.3rem 0}
+.card .src{font-size:.82rem;color:var(--muted)}
+.card .src a{white-space:nowrap}
+
+/* Fuentes */
+.search{width:100%;max-width:420px;font:inherit;padding:.55rem .8rem;border:1.5px solid var(--line);border-radius:4px;margin:.5rem 0}
+td.url{word-break:break-all;font-size:.85rem}
+
+footer{background:var(--ink);color:#D1D5DB;padding:2.5rem 0;font-size:.92rem}
+footer a{color:#93C5FD}
+footer p{max-width:70ch}
+
+#tip{position:fixed;z-index:200;background:var(--ink);color:#fff;font-size:.82rem;padding:.4rem .65rem;border-radius:4px;max-width:270px;pointer-events:none;line-height:1.35;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+@media (max-width:640px){body{font-size:16px}section.sec{padding:3rem 0}.brand{font-size:.95rem}}
+@media print{.nav,#tip{display:none}.hero{background:#fff;color:#000}.hero h1,.hero .lead{color:#000}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Secciones del sitio">
+  <div class="wrap">
+    <a class="brand" href="#inicio">Web &amp; IA 2021–2025</a>
+    <ul id="navlist">
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#metodologia">Metodología</a></li>
+      <li><a href="#frontend">Front End</a></li>
+      <li><a href="#backend">Back End</a></li>
+      <li><a href="#ia">Inteligencia Artificial</a></li>
+      <li><a href="#comparativa">Comparativa</a></li>
+      <li><a href="#hallazgos">Hallazgos</a></li>
+      <li><a href="#conclusiones">Conclusiones</a></li>
+      <li><a href="#fuentes">Fuentes</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <h1>Evolución del desarrollo web y la Inteligencia Artificial como soporte, 2021–2025</h1>
+    <p class="lead">Investigación académica sobre cómo cambiaron el Front End y el Back End, y cómo la IA se incorporó como herramienta de apoyo al desarrollo de software. Proyecto de la carrera Recursos Digitales.</p>
+    <ul class="legend-kinds" aria-label="Cómo distinguir el tipo de contenido">
+      <li><span class="tag tag-dato" style="background:#fff">Dato</span>cifra o hecho tomado de una fuente</li>
+      <li><span class="tag tag-analisis">Análisis</span>lectura de los datos</li>
+      <li><span class="tag tag-conclusion" style="background:#111827;outline:1px solid #fff">Conclusión</span>síntesis del proyecto</li>
+    </ul>
+
+    <h2 class="map-title">Los tres ejes, año por año</h2>
+    <p class="map-hint">Cada recuadro resume lo registrado en ese año. Selecciona uno para ver el detalle en la comparativa.</p>
+    <div class="map-scroll">
+      <div class="map" id="map" role="group" aria-label="Mapa de los tres ejes por año"></div>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- CONTEXTO Y OBJETIVOS -->
+<section class="sec" id="contexto">
+  <div class="wrap prose">
+    <h2>Contexto y objetivos</h2>
+    <p class="kicker">Este proyecto analiza cómo evolucionaron las tecnologías web del lado del cliente (Front End) y del servidor (Back End), y cómo la Inteligencia Artificial pasó a ser una herramienta de apoyo en el desarrollo de software entre 2021 y 2025.</p>
+
+    <div class="axes">
+      <a class="fe" href="#frontend"><strong>Front End</strong><span>Lenguajes, frameworks, librerías y herramientas de construcción del lado del cliente.</span></a>
+      <a class="be" href="#backend"><strong>Back End</strong><span>Lenguajes, runtimes, bases de datos, contenedores y plataformas del lado del servidor.</span></a>
+      <a class="ia" href="#ia"><strong>IA como soporte</strong><span>Autocompletado, chat, depuración, documentación, pruebas, aprendizaje y agentes.</span></a>
+    </div>
+
+    <p><b>Período de análisis:</b> exclusivamente 2021–2025. El sitio no incluye proyecciones posteriores a 2025.</p>
+
+    <h3>Objetivo general</h3>
+    <p>Analizar de manera integrada y documentada las transformaciones tecnológicas, los patrones de adopción y los cambios en los flujos de trabajo del desarrollo web Front End, Back End y de la asistencia mediante Inteligencia Artificial durante 2021–2025.</p>
+
+    <h3>Objetivos específicos</h3>
+    <ol>
+      <li>Mapear la evolución cronológica y los niveles de adopción de lenguajes, frameworks, librerías y herramientas en Front End.</li>
+      <li>Documentar los cambios en arquitecturas, runtimes, lenguajes y bases de datos relacionales y vectoriales en Back End.</li>
+      <li>Estudiar el impacto de las herramientas de IA como soporte al ciclo de desarrollo: adopción, tareas asistidas, confianza y riesgos.</li>
+      <li>Establecer las coincidencias temporales y las relaciones documentadas entre los tres ejes, sin inferir causalidad donde no exista evidencia explícita.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- METODOLOGÍA -->
+<section class="sec alt" id="metodologia">
+  <div class="wrap prose">
+    <h2>Metodología</h2>
+    <p class="kicker">El proyecto se desarrolló en tres etapas con herramientas distintas. Cada afirmación del sitio debe poder rastrearse hasta su fuente.</p>
+
+    <ol class="flow">
+      <li><b>Investigación</b><span>Perplexity: búsqueda y recopilación de información y fuentes.</span></li>
+      <li><b>Organización y análisis</b><span>Gemini: procesamiento de los archivos y análisis de los datos.</span></li>
+      <li><b>Desarrollo del sitio</b><span>Claude: construcción de este sitio HTML a partir de los resultados del análisis.</span></li>
+    </ol>
+
+    <h3>Archivos base</h3>
+    <ul>
+      <li><code>01_Front_End_2021_2025.xlsx</code>: hojas «Datos Front End» y «Fuentes».</li>
+      <li><code>02_Back_End_2021_2025.xlsx</code>: hojas «Datos Back End» y «Fuentes».</li>
+      <li><code>03_IA_como_soporte_al_desarrollo_2021_2025.docx</code>: documento de investigación sobre IA.</li>
+    </ul>
+
+    <h3>Reglas de tratamiento de los datos</h3>
+    <ul>
+      <li>Se conservan datos, porcentajes, fechas, tecnologías y URLs tal como fueron entregados. No se completa información ausente.</li>
+      <li>Cuando un valor no está en la recopilación se indica <i>«No disponible»</i> o <i>«No especificado»</i>.</li>
+      <li>Se distinguen tres tipos de contenido: datos cuantitativos (encuestas), afirmaciones de proveedores o documentación oficial, e investigaciones académicas.</li>
+      <li>No se declaran relaciones de causa y efecto salvo que la fuente original lo indique. Las coincidencias en el tiempo se presentan como coincidencias.</li>
+    </ul>
+
+    <h3>Qué encuesta mide a quién</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Fuente</th><th>Población según el análisis</th><th>Uso en este sitio</th></tr></thead>
+      <tbody>
+        <tr><td>Stack Overflow Developer Survey</td><td>Desarrolladores en general, incluidos Back End, desktop y ciencia de datos.</td><td>Series 2021–2025 de tecnologías e IA.</td></tr>
+        <tr><td>State of JS 2024</td><td>Muestra sesgada a especialistas del ecosistema JavaScript y Front End.</td><td>Datos Front End de 2024.</td></tr>
+        <tr><td>State of Node 2024</td><td>Desarrolladores especializados en JavaScript y Node.js.</td><td>Dato de Node.js de 2024.</td></tr>
+        <tr><td>State of Databases 2024</td><td>Muestra especializada en bases de datos.</td><td>Dato de PostgreSQL de 2024.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">Advertencia metodológica</span>
+      <p>Los porcentajes de encuestas distintas no deben compararse entre sí. Por ejemplo, el 39,5% de React en Stack Overflow 2024 y el 83% en State of JS 2024 miden poblaciones diferentes.</p>
+    </div>
+
+    <h3>Cómo leer los gráficos</h3>
+    <ul>
+      <li>Una <b>línea discontinua</b> indica un año sin dato entre dos puntos, o que el punto final es de 2024, año en que el análisis advierte un posible cambio de muestreo en Stack Overflow. En esos tramos no se interpreta la magnitud de la variación.</li>
+      <li>Una barra marcada como <b>No especificado</b> significa que la recopilación no trae ese valor.</li>
+      <li>Al pasar el cursor o enfocar un punto se muestra su fuente. Debajo de cada gráfico hay una tabla con los mismos datos.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FRONT END -->
+<section class="sec" id="frontend">
+  <div class="wrap prose">
+    <h2><span class="axis-tag" style="background:var(--fe)"></span>Evolución del Front End</h2>
+    <p class="kicker">De las aplicaciones de página única con React y Vue hacia el renderizado en servidor, el tipado estático y nuevas herramientas de construcción.</p>
+
+    <h3>Línea de tiempo</h3>
+    <ol class="tl" id="tl-fe"></ol>
+
+    <h3>Gráficos</h3>
+    <div class="charts">
+      <figure data-chart="ts"></figure>
+      <figure data-chart="fw2022"></figure>
+      <figure data-chart="sojs"></figure>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">No comparable</span>
+      <p>Las cifras de State of JS 2024 (TypeScript 89%, React 83%) provienen de especialistas en JavaScript. No deben leerse junto a las de Stack Overflow 2024 (TypeScript 38,5%, React 39,5%), que incluyen a desarrolladores de otras áreas.</p>
+    </div>
+
+    <h3>Valores registrados por año</h3>
+    <div id="tbl-fe-series"></div>
+
+    <h3>Tecnologías del Front End</h3>
+    <div id="tbl-fe-tech"></div>
+
+    <h3>Análisis</h3>
+    <div class="block b-analisis">
+      <span class="tag tag-analisis">Análisis</span>
+      <ul>
+        <li>TypeScript es la única tecnología con tres puntos en la serie de Stack Overflow: 30,19% (2021), 34,83% (2022) y 38,5% (2024). La variación 2021–2022 es de +4,64 puntos porcentuales.</li>
+        <li>React tiene el valor más alto entre frameworks y librerías en cada medición disponible: 69,28% frente a Vue.js 28,97% (2021), 68,19% frente a Angular 20,39% y Svelte 4,58% (2022), y 83% frente a Vue.js 48% y Next.js 46% en State of JS 2024. Entre 2021 y 2022 varió −1,09 puntos porcentuales.</li>
+        <li>Webpack solo tiene dato cuantitativo en 2021 (31,98%). Vite y Turbopack figuran únicamente de forma descriptiva, por lo que la sustitución entre herramientas de construcción no puede medirse con cifras.</li>
+        <li>Tailwind CSS (2023), Svelte 5 y Turbopack (2025) aparecen en fuentes descriptivas, sin valor disponible.</li>
+        <li>Para 2025 no hay datos cuantitativos de Front End en la recopilación.</li>
+      </ul>
+    </div>
+
+    <div class="block b-conclusion">
+      <span class="tag tag-conclusion">Conclusión del eje Front End</span>
+      <ul>
+        <li>TypeScript muestra valores crecientes en Stack Overflow (30,19% a 38,5%) y el valor más alto entre las tecnologías de State of JS 2024 (89%).</li>
+        <li>React mantiene el mayor uso entre los frameworks y librerías medidos y se complementa con Next.js (13,52% en Stack Overflow 2023; 46% en State of JS 2024) para renderizado en servidor.</li>
+        <li>Las herramientas de construcción evolucionan de Webpack hacia Vite y Turbopack según las fuentes descriptivas, sin cifras que permitan cuantificar el cambio.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BACK END -->
+<section class="sec alt" id="backend">
+  <div class="wrap prose">
+    <h2><span class="axis-tag" style="background:var(--be)"></span>Evolución del Back End</h2>
+    <p class="kicker">De microservicios y contenedores hacia entornos serverless, cómputo en el borde y bases de datos vectoriales.</p>
+
+    <h3>Línea de tiempo</h3>
+    <ol class="tl" id="tl-be"></ol>
+
+    <h3>Gráficos</h3>
+    <div class="charts">
+      <figure data-chart="pg"></figure>
+      <figure data-chart="go"></figure>
+      <figure data-chart="base2021"></figure>
+      <figure data-chart="docker"></figure>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">No comparable</span>
+      <p>El 40,8% de Node.js en Stack Overflow 2024 no se compara con el 72% de State of Node 2024, ni el 48,7% de PostgreSQL en Stack Overflow con el 65% de State of Databases: las muestras son distintas. Tampoco se comparan porcentajes con tecnologías registradas solo de forma descriptiva (AWS Lambda, Bun, Pinecone).</p>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">Nota sobre la calidad del dato</span>
+      <p>En la recopilación, Node.js figura con el mismo valor en 2021 y en 2022 (47,12%). Se muestra tal como fue entregado; conviene contrastarlo con la encuesta original.</p>
+    </div>
+
+    <h3>Valores registrados por año</h3>
+    <div id="tbl-be-series"></div>
+
+    <h3>Tecnologías del Back End</h3>
+    <div id="tbl-be-tech"></div>
+
+    <h3>Análisis</h3>
+    <div class="block b-analisis">
+      <span class="tag tag-analisis">Análisis</span>
+      <ul>
+        <li>PostgreSQL crece en cada medición: 40,42%, 43,59%, 45,55% y 48,7% (+8,28 puntos porcentuales entre 2021 y 2024). MySQL baja de 50,18% a 46,85% y a 41,09% (−9,09 puntos entre 2021 y 2023). MySQL no tiene dato de 2024 en la recopilación.</li>
+        <li>En 2023, PostgreSQL supera a MySQL por 4,46 puntos porcentuales. En 2021 y 2022, MySQL tenía el valor más alto.</li>
+        <li>Go pasa de 9,55% a 13,8% entre 2021 y 2024 (+4,25 puntos porcentuales; +44,5% respecto de su valor inicial).</li>
+        <li>Docker sube de 48,85% (2021) a 52,98% (2023): +4,13 puntos porcentuales.</li>
+        <li>Python registra 48,24%, 43,51% y 51,0% (2021, 2022, 2024). Java: 35,35% (2021) y 33,27% (2022), sin datos posteriores. Node.js: 47,12%, 47,12%, 42,65% y 40,8%.</li>
+        <li>Cloudflare Workers y Pgvector (2023), y Pinecone y Bun (2025), aparecen en fuentes descriptivas, sin valor disponible. Kubernetes solo tiene dato en 2021 (18,22%).</li>
+        <li>Para 2025 no hay datos cuantitativos de Back End en la recopilación.</li>
+      </ul>
+    </div>
+
+    <div class="block b-conclusion">
+      <span class="tag tag-conclusion">Conclusión del eje Back End</span>
+      <ul>
+        <li>Entre 2021 y 2024, PostgreSQL crece en Stack Overflow (40,42% a 48,7%) y alcanza 65% en State of Databases 2024. En 2023 supera a MySQL en la misma encuesta.</li>
+        <li>Go aumenta su valor en las tres mediciones disponibles (9,55%, 11,83% y 13,8%).</li>
+        <li>Las fuentes descriptivas incorporan hacia 2023–2025 herramientas para búsqueda vectorial (Pgvector, Pinecone) y ejecución en el borde (Cloudflare Workers).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- IA -->
+<section class="sec" id="ia">
+  <div class="wrap prose">
+    <h2><span class="axis-tag" style="background:var(--cyan)"></span>La IA como soporte al desarrollo</h2>
+    <p class="kicker">Del autocompletado en el editor a los asistentes conversacionales y a los agentes sobre repositorios, con una adopción creciente y una confianza dispar.</p>
+
+    <h3>Línea de tiempo</h3>
+    <ol class="tl" id="tl-ia"></ol>
+
+    <h3>Gráficos</h3>
+    <div class="charts">
+      <figure data-chart="adop"></figure>
+      <figure data-chart="conf"></figure>
+      <figure data-chart="tareas"></figure>
+      <figure data-chart="frus"></figure>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">Cautela de lectura</span>
+      <ul>
+        <li>Las preguntas de confianza y percepción pueden no ser idénticas entre encuestas. Las cifras se muestran por año, sin unirlas con líneas.</li>
+        <li>Para 2021 y 2022 no hay una medición anual equivalente de uso de IA en Stack Overflow. En 2025 el «uso actual» figura como no especificado.</li>
+        <li>La recopilación reporta 3% de personas que «confían mucho» en 2025; no aclara si ese grupo está incluido en el 33% que confía, por eso no se suma.</li>
+        <li>Hay varias cifras de 81% con significados distintos (documentación en 2024, productividad en 2024 y preocupación por privacidad en 2025), y dos de 45%. Cada una se indica con su indicador.</li>
+      </ul>
+    </div>
+
+    <h3>Tareas de desarrollo asistidas por IA</h3>
+    <div id="tbl-ia-tareas"></div>
+
+    <h3>Beneficios, limitaciones y riesgos documentados</h3>
+    <div class="split">
+      <div class="block b-dato" style="margin:0">
+        <span class="tag tag-dato">Beneficios</span>
+        <ul>
+          <li>Productividad como beneficio principal: 33% (2023) y 81% (2024).</li>
+          <li>Eficiencia entre profesionales: 27,9% (2023).</li>
+          <li>Estudiantes o personas que aprenden que indicaron que la IA aceleraba su aprendizaje: 42,4% (2023) y 71% (2024).</li>
+          <li>Reducción de tareas repetitivas: código repetitivo (<i>boilerplate</i>), pruebas unitarias y documentación inicial.</li>
+        </ul>
+      </div>
+      <div class="block b-dato" style="margin:0">
+        <span class="tag tag-dato">Limitaciones y riesgos</span>
+        <ul>
+          <li>Respuestas «casi correctas» como mayor frustración: 66% (2025).</li>
+          <li>Depurar código de IA puede tomar más tiempo que escribirlo: 45% (2025).</li>
+          <li>Confianza en la IA para tareas complejas: 35% (2024) y 29% (2025).</li>
+          <li>Estudio NYU Tandon (2021): 37,35% de los programas válidos generados presentaba fallas de seguridad.</li>
+          <li>Preocupación por seguridad y privacidad al usar agentes en repositorios: 81% (2025).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">No se presenta como crecimiento</span>
+      <p>La productividad (33% en 2023, 81% en 2024) y el aprendizaje (42,4% a 71%) son dos mediciones por año. El análisis no confirma que cada pregunta sea idéntica entre encuestas, por lo que no se interpreta como un aumento.</p>
+    </div>
+
+    <h3>Análisis</h3>
+    <div class="block b-analisis">
+      <span class="tag tag-analisis">Análisis</span>
+      <ul>
+        <li>El uso actual de IA pasa de 44% (2023) a 62% (2024). El uso actual o planificado pasa de 70% a 76% y a 84% (2025).</li>
+        <li>La percepción favorable baja de 77% a 72% entre 2023 y 2024. La confianza en la precisión es 42% (2023), 43% (2024) y 33% (2025), con 46% de desconfianza en 2025.</li>
+        <li>En 2024, los desarrolladores esperaban más apoyo de la IA en documentación (81%), pruebas (80%) y escritura de código (76%).</li>
+        <li>Según el análisis, el rol del desarrollador se desplaza hacia formular instrucciones precisas, revisar diferencias de código en <i>pull requests</i> y verificar seguridad y mantenibilidad. Es una interpretación del análisis, no una medición directa.</li>
+      </ul>
+    </div>
+
+    <div class="block b-conclusion">
+      <span class="tag tag-conclusion">Conclusión del eje IA</span>
+      <ul>
+        <li>Entre 2023 y 2025 aumenta el uso o la intención de uso de IA (70% a 84%), y la herramienta pasa del autocompletado a agentes que trabajan en ramas y proponen cambios.</li>
+        <li>En el mismo período la desconfianza en la precisión (46% en 2025) supera a la confianza (33%). Las fuentes describen el resultado como desarrollo asistido con supervisión humana.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVA -->
+<section class="sec alt" id="comparativa">
+  <div class="wrap prose">
+    <h2>Comparativa 2021–2025</h2>
+    <p class="kicker">Qué registra cada eje en cada año. Elige un año o abre la matriz completa.</p>
+
+    <div class="tabs" role="tablist" aria-label="Año a comparar" id="ytabs"></div>
+    <div id="ypanel" role="tabpanel" tabindex="0"></div>
+
+    <h3>Evolución general y cambios ligados a la IA</h3>
+    <p>El análisis distingue entre la evolución propia del desarrollo web y los cambios vinculados con la incorporación de IA. Las siguientes lecturas son interpretaciones del análisis; las fuentes entregadas no establecen la causa de cada cambio.</p>
+    <div class="split">
+      <div class="block b-analisis" style="margin:0">
+        <span class="tag tag-analisis">Evolución general</span>
+        <ul>
+          <li>TypeScript: 30,19% (2021) a 38,5% (2024) en Stack Overflow.</li>
+          <li>Herramientas de construcción: Webpack (31,98% en 2021) frente a Vite y Turbopack, registradas de forma descriptiva.</li>
+          <li>Bases de datos relacionales: PostgreSQL por encima de MySQL en 2023 (45,55% frente a 41,09%).</li>
+        </ul>
+      </div>
+      <div class="block b-analisis" style="margin:0">
+        <span class="tag tag-analisis">Ligado a la IA</span>
+        <ul>
+          <li>Pgvector (2023 y 2025) y Pinecone (2025) se describen como soporte de <i>embeddings</i> y flujos RAG.</li>
+          <li>Interfaz de trabajo: autocompletado en el editor (2021), chat conversacional (2023) y agentes en repositorios (2025).</li>
+          <li>Tareas con apoyo esperado en 2024: documentación (81%) y pruebas (80%), que alcanzan tanto al Front End como al Back End.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="block b-aviso">
+      <span class="tag tag-aviso">Coincidencia en el tiempo, no causalidad</span>
+      <p>Next.js aparece con 13,52% en 2023 y Go con 13,8% en 2024, mientras el uso de IA pasaba de 44% a 62% (uso actual) y de 70% a 84% (uso o planificado, 2023–2025). Los documentos no establecen una relación de causa y efecto entre el uso de IA y la elección de esos frameworks o lenguajes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HALLAZGOS -->
+<section class="sec" id="hallazgos">
+  <div class="wrap">
+    <h2>Principales hallazgos</h2>
+    <p class="kicker">Trece datos destacados, cada uno con su fuente. El número entre corchetes lleva a la referencia.</p>
+    <div class="chips" id="chips" role="group" aria-label="Filtrar hallazgos por eje">
+      <button type="button" data-f="all" aria-pressed="true">Todos</button>
+      <button type="button" data-f="fe" aria-pressed="false">Front End</button>
+      <button type="button" data-f="be" aria-pressed="false">Back End</button>
+      <button type="button" data-f="ia" aria-pressed="false">IA</button>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<!-- CONCLUSIONES -->
+<section class="sec alt" id="conclusiones">
+  <div class="wrap prose">
+    <h2>Conclusiones</h2>
+    <p class="kicker">Síntesis del proyecto, apoyada en los datos de las secciones anteriores.</p>
+
+    <div class="block b-conclusion dark">
+      <span class="tag tag-conclusion" style="outline:1px solid #fff">Conclusión principal</span>
+      <h4>Desarrollo asistido por IA bajo supervisión humana</h4>
+      <p>Entre 2023 y 2025 el uso o la intención de uso de IA pasó de 70% a 84%, mientras que la confianza en la precisión fue 42% (2023), 43% (2024) y 33% (2025), con 46% de desconfianza en 2025. La IA acelera tareas repetitivas y el aprendizaje, pero exige criterio de arquitectura, rendimiento y seguridad para revisar lo que produce.</p>
+    </div>
+
+    <div class="split">
+      <div class="block b-conclusion" style="margin:0">
+        <span class="tag tag-conclusion">Front End</span>
+        <p>Mayor uso de TypeScript (30,19% a 38,5% en Stack Overflow; 89% en State of JS 2024), liderazgo de React entre los frameworks medidos y herramientas de construcción y renderizado en servidor descritas en las fuentes.</p>
+      </div>
+      <div class="block b-conclusion" style="margin:0">
+        <span class="tag tag-conclusion">Back End</span>
+        <p>PostgreSQL crece hasta 48,7% en Stack Overflow 2024 y supera a MySQL en 2023. Go aumenta de 9,55% a 13,8%. Aparecen herramientas vectoriales y de borde en las fuentes descriptivas.</p>
+      </div>
+      <div class="block b-conclusion" style="margin:0">
+        <span class="tag tag-conclusion">Rol del desarrollador</span>
+        <p>Según el análisis, el trabajo se desplaza de escribir sintaxis repetitiva a formular instrucciones, revisar cambios, auditar seguridad y diseñar arquitectura. Es una interpretación derivada del análisis.</p>
+      </div>
+    </div>
+
+    <h3>Límites del estudio</h3>
+    <div class="block b-analisis">
+      <span class="tag tag-analisis">Análisis</span>
+      <ul>
+        <li>Varias tecnologías tienen un solo año con dato o solo descripción cualitativa, por lo que no forman series comparables.</li>
+        <li>No hay datos cuantitativos de Front End ni de Back End para 2025, ni métricas de encuesta sobre IA para 2021 y 2022.</li>
+        <li>Las encuestas de Stack Overflow y las de especialistas (State of JS, State of Node, State of Databases) tienen poblaciones distintas y no se comparan entre sí.</li>
+        <li>Las relaciones entre los tres ejes se presentan como coincidencias en el tiempo, no como causas demostradas.</li>
+        <li>Varias URLs de la recopilación apuntan a páginas generales de la fuente y algunas fuentes no traen URL (ver referencias).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FUENTES -->
+<section class="sec" id="fuentes">
+  <div class="wrap prose">
+    <h2>Fuentes y referencias</h2>
+    <p class="kicker">Las URLs se conservan tal como fueron entregadas por el análisis. Varias apuntan a la página principal de la fuente y no al artículo o informe específico. Donde no se entregó URL, se indica.</p>
+    <label for="q" class="dim">Buscar por fuente, año o contenido</label><br>
+    <input id="q" class="search" type="search" placeholder="Por ejemplo: Stack Overflow, 2024, Copilot">
+    <div class="tbl-wrap"><table id="tbl-src">
+      <thead><tr><th class="n">N.º</th><th>Fuente</th><th>Año</th><th>Título</th><th>URL</th><th>Información aportada</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p id="nores" class="dim" hidden>No hay referencias que coincidan con la búsqueda.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Evolución del desarrollo web y la Inteligencia Artificial como soporte (2021–2025).</b> Proyecto académico de la carrera Recursos Digitales.</p>
+    <p>Investigación con Perplexity, análisis de datos con Gemini y desarrollo del sitio con Claude. Todos los datos provienen de las fuentes listadas en la sección de referencias.</p>
+    <p><a href="#inicio">Volver al inicio</a></p>
+  </div>
+</footer>
+
+<div id="tip" role="tooltip" hidden></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- utilidades ---------- */
+const NS='http://www.w3.org/2000/svg';
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+function S(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs){e.setAttribute(k,attrs[k]);}if(parent)parent.appendChild(e);return e;}
+const fmt=n=>Number.isInteger(n)?String(n):String(n).replace('.',',');
+const pct=n=>fmt(n)+'%';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---------- fuentes ---------- */
+const SRC=[
+ {n:1,f:'GitHub Blog',y:'2021',t:'Introducing GitHub Copilot: an AI pair programmer',u:'https://github.blog/2021-06-29-introducing-github-copilot-an-ai-pair-programmer/',i:'Anuncio del Technical Preview de Copilot (29 de junio de 2021).'},
+ {n:2,f:'NYU Tandon School of Engineering / Pomona CS',y:'2021',t:'An Empirical Cybersecurity Evaluation of GitHub Copilot\u2019s Code Generation',u:'https://engineering.nyu.edu/',i:'Estudio de seguridad: 37,35% de los programas válidos generados presentaba fallas o vulnerabilidades.'},
+ {n:3,f:'GitHub Blog',y:'2022',t:'GitHub Copilot is generally available to all developers',u:'https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/',i:'Disponibilidad general de Copilot (21 de junio de 2022).'},
+ {n:4,f:'Stack Overflow',y:'2023',t:'Stack Overflow Developer Survey 2023',u:'https://survey.stackoverflow.co/2023/',i:'Adopción de IA, herramientas, percepción; Next.js, PostgreSQL, MySQL, Node.js, Docker, MongoDB y Redis en 2023.'},
+ {n:5,f:'Stack Overflow',y:'2024',t:'Stack Overflow Developer Survey 2024',u:'https://survey.stackoverflow.co/2024/',i:'Uso de IA, confianza, tareas esperadas; React, TypeScript, Node.js, Python, Go y PostgreSQL en 2024.'},
+ {n:6,f:'Stack Overflow',y:'2025',t:'Stack Overflow Developer Survey 2025',u:'https://survey.stackoverflow.co/2025/',i:'Agentes de IA, confianza, respuestas «casi correctas», depuración y preocupación por privacidad.'},
+ {n:7,f:'GitHub Docs',y:'Vigente',t:'GitHub Copilot Documentation',u:'https://docs.github.com/en/copilot',i:'Documentación de GitHub Copilot y Copilot Chat.'},
+ {n:8,f:'Devographics',y:'2024',t:'State of JS 2024 Survey',u:'https://stateofjs.com/',i:'TypeScript 89%, React 83%, Vue.js 48% y Next.js 46% entre especialistas en JavaScript.'},
+ {n:9,f:'Devographics / Industry Reports',y:'2024',t:'State of Node 2024 y State of Databases 2024',u:'https://devographics.com/',i:'Node.js 72% (State of Node) y PostgreSQL 65% (State of Databases).'},
+ {n:10,f:'Stack Overflow',y:'2021',t:'Stack Overflow Developer Survey 2021',u:'',i:'Datos de 2021 de React, Vue.js, JavaScript, TypeScript, Webpack, Python, Node.js, Java, Go, MySQL, PostgreSQL, Docker y Kubernetes. URL no especificada en la recopilación.'},
+ {n:11,f:'Stack Overflow',y:'2022',t:'Stack Overflow Developer Survey 2022',u:'',i:'Datos de 2022 de React, Angular, Svelte, TypeScript, Node.js, Python, Java, Go, PostgreSQL y MySQL. URL no especificada en la recopilación.'},
+ {n:12,f:'Vite (documentación oficial y reportes del ecosistema)',y:'2022, 2023, 2025',t:'Documentación de Vite',u:'',i:'Descripción de Vite como herramienta de construcción. URL no especificada.'},
+ {n:13,f:'Tailwind CSS (documentación) / State of CSS',y:'2023',t:'Documentación de Tailwind CSS',u:'',i:'Descripción de Tailwind CSS. URL no especificada.'},
+ {n:14,f:'Vercel / Next.js (documentación)',y:'2025',t:'Documentación de Turbopack y Next.js',u:'',i:'Descripción de Turbopack. URL no especificada.'},
+ {n:15,f:'Svelte (documentación y notas de versión)',y:'2025',t:'Notas de versión de Svelte 5',u:'',i:'Descripción de Svelte 5 (runes y señales). URL no especificada.'},
+ {n:16,f:'AWS (documentación y reportes de nube)',y:'2022',t:'Documentación de AWS Lambda',u:'',i:'Descripción de AWS Lambda y Serverless. URL no especificada.'},
+ {n:17,f:'Cloudflare (documentación)',y:'2023',t:'Documentación de Cloudflare Workers',u:'',i:'Descripción de Cloudflare Workers y Edge Computing. URL no especificada.'},
+ {n:18,f:'PostgreSQL / Pgvector (documentación)',y:'2023, 2025',t:'Documentación de Pgvector',u:'',i:'Descripción de Pgvector para embeddings. URL no especificada.'},
+ {n:19,f:'Pinecone (documentación)',y:'2025',t:'Documentación de Pinecone',u:'',i:'Descripción de Pinecone como base de datos vectorial. URL no especificada.'},
+ {n:20,f:'Bun (notas de versión oficiales)',y:'2025',t:'Notas de versión de Bun',u:'',i:'Descripción de Bun como runtime. URL no especificada.'}
+];
+const SO={2021:'Stack Overflow Developer Survey 2021',2022:'Stack Overflow Developer Survey 2022',2023:'Stack Overflow Developer Survey 2023',2024:'Stack Overflow Developer Survey 2024',2025:'Stack Overflow Developer Survey 2025'};
+
+/* ---------- tooltip ---------- */
+const tip=$('#tip');
+function showTip(node,text){tip.textContent=text;tip.hidden=false;const r=node.getBoundingClientRect();
+  let left=r.left+r.width/2-tip.offsetWidth/2;left=Math.max(8,Math.min(window.innerWidth-tip.offsetWidth-8,left));
+  let top=r.top-tip.offsetHeight-8;if(top<8)top=r.bottom+8;tip.style.left=left+'px';tip.style.top=top+'px';}
+function hideTip(){tip.hidden=true;}
+function bindTip(node,text){node.setAttribute('tabindex','0');node.setAttribute('aria-label',text);
+  node.addEventListener('mouseenter',()=>showTip(node,text));node.addEventListener('focus',()=>showTip(node,text));
+  node.addEventListener('mouseleave',hideTip);node.addEventListener('blur',hideTip);node.addEventListener('click',()=>showTip(node,text));}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip();});
+window.addEventListener('scroll',hideTip,{passive:true});
+
+/* ---------- tablas ---------- */
+function tbl(head,rows,opt){opt=opt||{};
+  return '<div class="tbl-wrap"><table>'+(opt.caption?'<caption>'+opt.caption+'</caption>':'')+'<thead><tr>'+head.map((h,i)=>'<th'+(opt.num&&i>0?' class="n"':'')+'>'+h+'</th>').join('')+'</tr></thead><tbody>'+
+  rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(opt.num&&i>0?' class="n"':'')+'>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
+const dash='<span class="dim">—</span>';
+
+/* ---------- gráficos ---------- */
+function grid(svg,m,W,H,min,max,step,unit){
+  const py=v=>m.t+(H-m.t-m.b)*(1-(v-min)/(max-min));
+  for(let t=min;t<=max+1e-9;t+=step){
+    S('line',{x1:m.l,x2:W-m.r,y1:py(t),y2:py(t),stroke:t===min?'#9CA3AF':'#E5E7EB','stroke-width':1},svg);
+    const tx=S('text',{x:m.l-8,y:py(t)+4,'text-anchor':'end','font-size':12,fill:'#4B5563'},svg);tx.textContent=t+(unit||'%');
+  }
+  return py;
+}
+function legendHtml(cfg,items){cfg.legend.innerHTML=items.map(s=>'<span><span class="sw" style="background:'+s.color+';border-radius:'+(s.marker==='square'?'2px':'50%')+'"></span>'+esc(s.name)+'</span>').join('');}
+
+function lineChart(cfg){
+  const host=cfg.plot;const W=Math.max(300,Math.floor(host.clientWidth)||560);const H=Math.round(Math.min(340,Math.max(260,W*0.56)));
+  const xs=cfg.xs;const nodata=xs.filter(y=>!cfg.series.some(s=>s.data[y]!=null));
+  const m={l:W<420?40:48,r:22,t:26,b:nodata.length?60:42};
+  const svg=S('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H,role:'img','aria-label':cfg.aria},host);
+  const py=grid(svg,m,W,H,cfg.min,cfg.max,cfg.step);
+  const n=xs.length;const px=i=>m.l+30+(W-m.l-m.r-60)*(n===1?0.5:i/(n-1));
+  xs.forEach((y,i)=>{const t=S('text',{x:px(i),y:H-m.b+22,'text-anchor':'middle','font-size':13,'font-weight':600,fill:'#111827'},svg);t.textContent=y;
+    if(nodata.indexOf(y)>-1){const t2=S('text',{x:px(i),y:H-m.b+38,'text-anchor':'middle','font-size':11,fill:'#4B5563','font-style':'italic'},svg);t2.textContent='sin dato';}});
+  cfg.series.forEach(s=>{
+    const pts=xs.map((y,i)=>({i:i,y:y,v:s.data[y]})).filter(p=>p.v!=null);
+    for(let k=1;k<pts.length;k++){const a=pts[k-1],b=pts[k];const dashed=(b.i-a.i>1)||(cfg.dashYears||[]).indexOf(b.y)>-1;
+      S('line',{x1:px(a.i),y1:py(a.v),x2:px(b.i),y2:py(b.v),stroke:s.color,'stroke-width':3,'stroke-dasharray':dashed?'7 6':'none','stroke-linecap':'round'},svg);}
+    pts.forEach(p=>{
+      const cx=px(p.i),cy=py(p.v);let mk;
+      if(s.marker==='square'){mk=S('rect',{x:cx-6,y:cy-6,width:12,height:12,fill:s.color,stroke:'#fff','stroke-width':2,class:'pt'},svg);}
+      else{mk=S('circle',{cx:cx,cy:cy,r:6.5,fill:s.color,stroke:'#fff','stroke-width':2,class:'pt'},svg);}
+      const others=cfg.series.filter(o=>o!==s&&o.data[p.y]!=null).map(o=>o.data[p.y]);
+      const below=others.some(v=>v>p.v);
+      const lb=S('text',{x:cx,y:below?cy+24:cy-12,'text-anchor':'middle','font-size':13,'font-weight':700,fill:s.text||s.color},svg);lb.textContent=pct(p.v);
+      bindTip(mk,s.name+', '+p.y+': '+pct(p.v)+'. Fuente: '+((s.src&&s.src[p.y])||cfg.srcShort));
+    });
+  });
+  legendHtml(cfg,cfg.series);
+}
+
+function columnChart(cfg){
+  const host=cfg.plot;const W=Math.max(300,Math.floor(host.clientWidth)||560);const H=Math.round(Math.min(340,Math.max(270,W*0.58)));
+  const m={l:W<420?40:48,r:14,t:28,b:40};
+  const svg=S('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H,role:'img','aria-label':cfg.aria},host);
+  const py=grid(svg,m,W,H,0,cfg.max,cfg.step);
+  const nc=cfg.cats.length,ns=cfg.series.length,gw=(W-m.l-m.r)/nc,gap=6;
+  const bw=Math.min(72,(gw*0.72-gap*(ns-1))/ns);
+  cfg.cats.forEach((c,i)=>{
+    const gx=m.l+gw*i+gw/2,total=bw*ns+gap*(ns-1);
+    cfg.series.forEach((s,j)=>{
+      const v=c.vals[j],x=gx-total/2+j*(bw+gap);
+      if(v==null){
+        S('rect',{x:x,y:py(0)-26,width:bw,height:26,fill:'none',stroke:'#9CA3AF','stroke-dasharray':'4 3'},svg);
+        const t=S('text',{x:x+bw/2+4,y:py(0)-32,'font-size':11,fill:'#4B5563','font-style':'italic',transform:'rotate(-90 '+(x+bw/2+4)+' '+(py(0)-32)+')'},svg);t.textContent='No especificado';
+        return;
+      }
+      const r=S('rect',{x:x,y:py(v),width:bw,height:py(0)-py(v),fill:s.color,class:'pt'},svg);
+      const lb=S('text',{x:x+bw/2,y:py(v)-6,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#111827'},svg);lb.textContent=pct(v);
+      bindTip(r,s.name+', '+c.label+': '+pct(v)+'. Fuente: '+((c.src&&c.src[j])||cfg.srcShort));
+    });
+    const t=S('text',{x:gx,y:H-m.b+22,'text-anchor':'middle','font-size':13,'font-weight':600,fill:'#111827'},svg);t.textContent=c.label;
+  });
+  if(ns>1)legendHtml(cfg,cfg.series);
+}
+
+function hbar(cfg){
+  let html='';
+  cfg.groups.forEach((g,gi)=>{
+    html+='<div class="hg">'+(g.title?'<h5>'+g.title+'</h5>':'');
+    g.rows.forEach((r,ri)=>{
+      const id='hb-'+cfg.id+'-'+gi+'-'+ri;
+      html+='<div class="hrow"><div class="hl">'+r.label+'</div><div class="hb"><div class="trk">'+
+        (r.v==null?'<span class="none">No especificado</span>':'<div class="fill pt" id="'+id+'" style="width:'+r.v+'%;background:'+(r.color||cfg.color)+'"></div>')+
+        '</div><span class="hv">'+(r.v==null?'':pct(r.v))+'</span></div></div>';
+    });
+    html+='</div>';
+  });
+  cfg.plot.innerHTML=html;
+  cfg.groups.forEach((g,gi)=>g.rows.forEach((r,ri)=>{
+    if(r.v==null)return;const node=document.getElementById('hb-'+cfg.id+'-'+gi+'-'+ri);
+    bindTip(node,r.label.replace(/<[^>]+>/g,'')+': '+pct(r.v)+'. Fuente: '+(r.src||cfg.srcShort));
+  }));
+}
+
+const CH={};
+const TYPES={line:lineChart,col:columnChart,hbar:hbar};
+function figure(id,cfg){
+  cfg.id=id;const root=document.querySelector('[data-chart="'+id+'"]');root.classList.add('chart');
+  root.innerHTML='<h4 class="ct">'+cfg.title+'</h4>'+(cfg.sub?'<p class="cs">'+cfg.sub+'</p>':'')+'<div class="plot"></div><div class="legend"></div>'+(cfg.note?'<p class="cn">'+cfg.note+'</p>':'')+'<p class="csrc"><b>Fuente:</b> '+cfg.source+'</p><details class="dt"><summary>Ver datos en tabla</summary>'+cfg.table+'</details>';
+  cfg.plot=root.querySelector('.plot');cfg.legend=root.querySelector('.legend');CH[id]=cfg;draw(cfg);
+}
+function draw(cfg){cfg.plot.innerHTML='';cfg.legend.innerHTML='';TYPES[cfg.type](cfg);}
+
+/* ---------- definición de gráficos ---------- */
+function defineCharts(){
+figure('ts',{type:'line',title:'TypeScript en Stack Overflow, 2021–2024',sub:'Porcentaje de adopción entre los encuestados',
+  aria:'Gráfico de líneas: TypeScript 30,19% en 2021, 34,83% en 2022 y 38,5% en 2024; sin dato en 2023.',
+  xs:[2021,2022,2023,2024],min:0,max:50,step:10,dashYears:[2024],srcShort:'Stack Overflow Developer Survey',
+  series:[{name:'TypeScript',color:'#1E3A8A',text:'#1E3A8A',marker:'circle',data:{2021:30.19,2022:34.83,2024:38.5},src:{2021:SO[2021],2022:SO[2022],2024:SO[2024]}}],
+  note:'Línea discontinua: 2023 sin dato y posible diferencia de muestreo en 2024. No se interpreta la magnitud de la variación 2022–2024.',
+  source:'Stack Overflow Developer Survey 2021 [10], 2022 [11] y 2024 [5].',
+  table:tbl(['Año','TypeScript'],[[2021,'30,19%'],[2022,'34,83%'],[2023,'Sin dato'],[2024,'38,5%']],{num:true})});
+
+figure('fw2022',{type:'hbar',title:'Frameworks Front End en Stack Overflow, 2022',sub:'Porcentaje de adopción entre los encuestados',color:'#1E3A8A',srcShort:SO[2022],
+  groups:[{rows:[{label:'React',v:68.19},{label:'Angular',v:20.39},{label:'Svelte',v:4.58}]}],
+  note:'Los tres valores pertenecen a la misma medición, por lo que pueden compararse entre sí.',
+  source:'Stack Overflow Developer Survey 2022 [11].',
+  table:tbl(['Framework','2022'],[['React','68,19%'],['Angular','20,39%'],['Svelte','4,58%']],{num:true})});
+
+figure('sojs',{type:'hbar',title:'Tecnologías Front End según State of JS, 2024',sub:'Porcentaje de uso entre especialistas en JavaScript',color:'#1E3A8A',srcShort:'State of JS 2024',
+  groups:[{rows:[{label:'TypeScript',v:89},{label:'React',v:83},{label:'Vue.js',v:48},{label:'Next.js',v:46}]}],
+  note:'Población distinta de la de Stack Overflow: no comparar con sus cifras de 2024.',
+  source:'State of JS 2024 [8].',
+  table:tbl(['Tecnología','2024'],[['TypeScript','89%'],['React','83%'],['Vue.js','48%'],['Next.js','46%']],{num:true})});
+
+figure('pg',{type:'line',title:'PostgreSQL y MySQL en Stack Overflow, 2021–2024',sub:'Porcentaje de adopción entre los encuestados',
+  aria:'Gráfico de líneas: PostgreSQL 40,42%, 43,59%, 45,55% y 48,7%; MySQL 50,18%, 46,85% y 41,09% de 2021 a 2023, sin dato en 2024.',
+  xs:[2021,2022,2023,2024],min:0,max:60,step:10,dashYears:[2024],srcShort:'Stack Overflow Developer Survey',
+  series:[{name:'PostgreSQL',color:'#B7791F',text:'#92400E',marker:'circle',data:{2021:40.42,2022:43.59,2023:45.55,2024:48.7},src:SO},
+          {name:'MySQL',color:'#6B7280',text:'#374151',marker:'square',data:{2021:50.18,2022:46.85,2023:41.09},src:SO}],
+  note:'En 2023 PostgreSQL (45,55%) supera a MySQL (41,09%). MySQL no tiene dato de 2024 en la recopilación. Línea discontinua: posible diferencia de muestreo en 2024.',
+  source:'Stack Overflow Developer Survey 2021 [10], 2022 [11], 2023 [4] y 2024 [5].',
+  table:tbl(['Año','PostgreSQL','MySQL'],[[2021,'40,42%','50,18%'],[2022,'43,59%','46,85%'],[2023,'45,55%','41,09%'],[2024,'48,7%','No disponible']],{num:true})});
+
+figure('go',{type:'col',title:'Go en Stack Overflow, 2021–2024',sub:'Porcentaje de adopción entre los encuestados',
+  aria:'Gráfico de columnas: Go 9,55% en 2021, 11,83% en 2022 y 13,8% en 2024.',max:20,step:5,srcShort:'Stack Overflow Developer Survey',
+  series:[{name:'Go',color:'#B7791F'}],
+  cats:[{label:'2021',vals:[9.55],src:[SO[2021]]},{label:'2022',vals:[11.83],src:[SO[2022]]},{label:'2024',vals:[13.8],src:[SO[2024]]}],
+  note:'No hay dato de 2023 en la recopilación.',
+  source:'Stack Overflow Developer Survey 2021 [10], 2022 [11] y 2024 [5].',
+  table:tbl(['Año','Go'],[[2021,'9,55%'],[2022,'11,83%'],[2023,'Sin dato'],[2024,'13,8%']],{num:true})});
+
+figure('base2021',{type:'hbar',title:'Lenguajes y runtimes Back End en 2021',sub:'Línea de base al inicio del período, Stack Overflow',color:'#B7791F',srcShort:SO[2021],
+  groups:[{rows:[{label:'Python',v:48.24},{label:'Node.js',v:47.12},{label:'Java',v:35.35},{label:'Go',v:9.55}]}],
+  note:'Valores de una misma medición, comparables entre sí.',
+  source:'Stack Overflow Developer Survey 2021 [10].',
+  table:tbl(['Tecnología','2021'],[['Python','48,24%'],['Node.js','47,12%'],['Java','35,35%'],['Go','9,55%']],{num:true})});
+
+figure('docker',{type:'col',title:'Docker en Stack Overflow, 2021 y 2023',sub:'Porcentaje de adopción entre los encuestados',
+  aria:'Gráfico de columnas: Docker 48,85% en 2021 y 52,98% en 2023.',max:60,step:10,srcShort:'Stack Overflow Developer Survey',
+  series:[{name:'Docker',color:'#B7791F'}],
+  cats:[{label:'2021',vals:[48.85],src:[SO[2021]]},{label:'2023',vals:[52.98],src:[SO[2023]]}],
+  note:'Solo hay dos mediciones; 2022 y 2024 no tienen dato en la recopilación.',
+  source:'Stack Overflow Developer Survey 2021 [10] y 2023 [4].',
+  table:tbl(['Año','Docker'],[[2021,'48,85%'],[2023,'52,98%']],{num:true})});
+
+figure('adop',{type:'col',title:'Uso de IA entre desarrolladores, 2023–2025',sub:'Uso actual y uso actual o planificado, Stack Overflow',
+  aria:'Gráfico de columnas: uso actual 44% en 2023 y 62% en 2024, sin especificar en 2025; uso actual o planificado 70%, 76% y 84%.',max:100,step:20,srcShort:'Stack Overflow Developer Survey',
+  series:[{name:'Usa IA actualmente',color:'#0E7490'},{name:'Usa o planea usar IA',color:'#06B6D4'}],
+  cats:[{label:'2023',vals:[44,70],src:[SO[2023],SO[2023]]},{label:'2024',vals:[62,76],src:[SO[2024],SO[2024]]},{label:'2025',vals:[null,84],src:[SO[2025],SO[2025]]}],
+  note:'2023: 44% usaba IA y 26% planeaba usarla (70% en total). Sin medición anual equivalente en 2021 y 2022.',
+  source:'Stack Overflow Developer Survey 2023 [4], 2024 [5] y 2025 [6].',
+  table:tbl(['Año','Usa IA actualmente','Usa o planea usar'],[[2023,'44%','70% (44% + 26%)'],[2024,'62%','76%'],[2025,'No especificado','84%']],{num:true})});
+
+figure('conf',{type:'hbar',title:'Percepción y confianza en la IA',sub:'Porcentaje de encuestados, por año',color:'#0E7490',srcShort:'Stack Overflow Developer Survey',
+  groups:[
+   {title:'2023',rows:[{label:'Percepción favorable',v:77,src:SO[2023]},{label:'Confía en la precisión',v:42,src:SO[2023]}]},
+   {title:'2024',rows:[{label:'Percepción favorable',v:72,src:SO[2024]},{label:'Confía en la precisión',v:43,src:SO[2024]},{label:'Se declara escéptico',v:31,src:SO[2024],color:'#6B7280'},{label:'Confía en la IA para tareas complejas',v:35,src:SO[2025]+' (dato comparativo de 2024)'}]},
+   {title:'2025',rows:[{label:'Confía en la precisión',v:33,src:SO[2025]},{label:'Desconfía de la precisión',v:46,src:SO[2025],color:'#B91C1C'},{label:'Confía en la IA para tareas complejas',v:29,src:SO[2025]}]}],
+  note:'Las preguntas pueden no ser idénticas entre años; no se unen con líneas. En 2025 el 3% que «confía mucho» no se suma al 33%.',
+  source:'Stack Overflow Developer Survey 2023 [4], 2024 [5] y 2025 [6].',
+  table:tbl(['Indicador','2023','2024','2025'],[['Percepción favorable','77%','72%',dash],['Confía en la precisión','42%','43%','33%'],['Escéptico / desconfía','—','31% (escéptico)','46% (desconfía)'],['Confía en la IA para tareas complejas','—','35%','29%'],['Confía mucho','—','—','3%']],{num:true})});
+
+figure('tareas',{type:'hbar',title:'Tareas con mayor apoyo esperado de la IA, 2024',sub:'Porcentaje de encuestados, Stack Overflow 2024',color:'#0E7490',srcShort:SO[2024],
+  groups:[{rows:[{label:'Documentación',v:81},{label:'Generación de pruebas',v:80},{label:'Escritura de código',v:76}]}],
+  note:'Se trata de apoyo esperado o previsto, no de uso medido.',
+  source:'Stack Overflow Developer Survey 2024 [5].',
+  table:tbl(['Tarea','2024'],[['Documentación','81%'],['Generación de pruebas','80%'],['Escritura de código','76%']],{num:true})});
+
+figure('frus',{type:'hbar',title:'Frustraciones y preocupaciones sobre la IA, 2025',sub:'Cada barra es un porcentaje independiente; no suman 100%',color:'#0E7490',srcShort:SO[2025],
+  groups:[{rows:[{label:'Preocupación por seguridad y privacidad al usar agentes en repositorios',v:81},{label:'Mayor frustración: respuestas «casi correctas»',v:66},{label:'Depurar código de IA puede tomar más tiempo que escribirlo',v:45}]}],
+  note:'Son preguntas distintas, respondidas por los mismos encuestados.',
+  source:'Stack Overflow Developer Survey 2025 [6].',
+  table:tbl(['Indicador','2025'],[['Preocupación por seguridad y privacidad con agentes','81%'],['Respuestas «casi correctas» como mayor frustración','66%'],['Depurar código de IA toma más tiempo que escribirlo','45%']],{num:true})});
+}
+
+/* ---------- contenido por año ---------- */
+const Y={
+ 2021:{fe:['React 69,28% y Vue.js 28,97%','JavaScript 64,96%; TypeScript 30,19%','Webpack 31,98% como herramienta de construcción','Contexto: consolidación de aplicaciones de página única (SPA)'],
+       be:['Python 48,24%; Node.js 47,12%; Java 35,35%; Go 9,55%','MySQL 50,18%; PostgreSQL 40,42%','Docker 48,85%; Kubernetes 18,22%','Contexto: microservicios, REST y GraphQL'],
+       ia:['Technical Preview de GitHub Copilot (29 de junio)','Estudio NYU Tandon: 37,35% de programas válidos con fallas de seguridad','Sin medición anual equivalente en Stack Overflow'],
+       c:'Autocompletado experimental en el editor conviviendo con aplicaciones SPA y microservicios tradicionales.'},
+ 2022:{fe:['React 68,19%; Angular 20,39%; Svelte 4,58%','TypeScript 34,83%','Contexto: Vite emerge como herramienta de construcción (sin valor disponible)'],
+       be:['Node.js 47,12%; Python 43,51%; Java 33,27%; Go 11,83%','PostgreSQL 43,59%; MySQL 46,85%','Contexto: expansión de Serverless (AWS Lambda), sin valor disponible'],
+       ia:['Disponibilidad general de Copilot (21 de junio) para desarrolladores individuales','Autocompletado a partir de código y comentarios','Sin medición anual equivalente en Stack Overflow'],
+       c:'La IA pasa de vista previa a producto comercial; TypeScript sigue subiendo en Stack Overflow y se expanden las arquitecturas serverless.'},
+ 2023:{fe:['Next.js 13,52% (Stack Overflow)','Contexto: expansión de SSR/SSG; se masifica Tailwind CSS y se afirma Vite (sin valor disponible)'],
+       be:['PostgreSQL 45,55% frente a MySQL 41,09%','Node.js 42,65%; Docker 52,98%','MongoDB 24,85%; Redis 22,2%','Contexto: Cloudflare Workers (borde) y primeras apariciones de Pgvector'],
+       ia:['Copilot, Copilot Chat y ChatGPT','44% usa IA; 26% planea usarla (70% en total)','Copilot, herramienta más probada (44%); 83% experimentó con ChatGPT','77% percepción favorable; 42% confía en la precisión'],
+       c:'Adopción masiva de la IA conversacional en lenguaje natural y, en Stack Overflow, PostgreSQL por encima de MySQL por primera vez en la serie disponible.'},
+ 2024:{fe:['TypeScript 38,5% (Stack Overflow) y 89% (State of JS)','React 39,5% (Stack Overflow) y 83% (State of JS)','Vue.js 48% y Next.js 46% (State of JS)','Contexto: React Server Components y foco en rendimiento'],
+       be:['PostgreSQL 48,7% (Stack Overflow) y 65% (State of Databases)','Python 51%; Go 13,8%','Node.js 40,8% (Stack Overflow) y 72% (State of Node)','Contexto: bases de datos vectoriales en la infraestructura'],
+       ia:['62% usa IA; 76% usa o planea usarla','Apoyo esperado: documentación 81%, pruebas 80%, código 76%','72% percepción favorable; 43% confía en la precisión; 31% escéptico','Copilot en pull requests'],
+       c:'Normalización de la IA en el flujo de trabajo: la percepción favorable baja de 77% a 72% y la confianza en la precisión se mantiene en 42%–43%.'},
+ 2025:{fe:['Sin datos cuantitativos en la recopilación','Contexto: Svelte 5 (runes y señales), Turbopack y Vite'],
+       be:['Sin datos cuantitativos en la recopilación','Contexto: Bun, Pgvector y Pinecone para flujos RAG'],
+       ia:['Agentes de IA en repositorios','84% usa o planea usar IA','46% desconfía y 33% confía en la precisión; 29% confía para tareas complejas','66% «casi correctas»; 45% depurar toma más tiempo; 81% preocupado por privacidad'],
+       c:'Despliegue de agentes de código junto con más desconfianza (46%) que confianza (33%) y necesidad de revisión humana.'}
+};
+const YEARS=[2021,2022,2023,2024,2025];
+
+function cellText(y,ax){const d=Y[y][ax];return d[0];}
+const MAP={
+ 2021:['React 69,28% y Vue.js 28,97%; Webpack 31,98%','MySQL 50,18% y PostgreSQL 40,42%; Docker 48,85%','Copilot Technical Preview; estudio NYU: 37,35%'],
+ 2022:['TypeScript 34,83%; Angular 20,39%; Svelte 4,58%; emerge Vite','PostgreSQL 43,59%; Go 11,83%; Serverless con AWS Lambda','Copilot disponible comercialmente; sin medición equivalente'],
+ 2023:['Next.js 13,52% y SSR/SSG; se masifica Tailwind CSS','PostgreSQL 45,55% frente a MySQL 41,09%; Edge y Pgvector','Copilot Chat y ChatGPT; 44% usa IA, 70% usa o planea'],
+ 2024:['TypeScript 38,5% (Stack Overflow) y 89% (State of JS)','PostgreSQL 48,7%; Go 13,8%; Python 51%','62% usa IA; 43% confía en la precisión'],
+ 2025:['Svelte 5, Turbopack y Vite; sin cifras comparables','Bun, Pgvector y Pinecone para RAG; sin cifras','Agentes en repositorios; 84%; 46% desconfía, 33% confía']
+};
+function buildMap(){
+  let h='<div></div>'+YEARS.map(y=>'<div class="yr">'+y+'</div>').join('');
+  [['fe','Front End',0],['be','Back End',1],['ia','IA como soporte',2]].forEach(a=>{
+    h+='<div class="axis '+a[0]+'">'+a[1]+'</div>'+YEARS.map(y=>'<a class="cell" href="#comparativa" data-year="'+y+'">'+MAP[y][a[2]]+'</a>').join('');
+  });
+  $('#map').innerHTML=h;
+  $$('#map a.cell').forEach(a=>a.addEventListener('click',()=>selectYear(a.getAttribute('data-year'))));
+}
+
+/* ---------- líneas de tiempo ---------- */
+const TL={
+ fe:[[2021,'React 69,28% y Vue.js 28,97%; JavaScript 64,96%; TypeScript 30,19%; Webpack 31,98% (Stack Overflow 2021).','Consolidación de aplicaciones de página única (SPA) con librerías y frameworks maduros.'],
+     [2022,'React 68,19%; Angular 20,39%; Svelte 4,58%; TypeScript 34,83% (Stack Overflow 2022).','Vite emerge como herramienta de construcción; sin valor disponible.'],
+     [2023,'Next.js 13,52% (Stack Overflow 2023).','Expansión de SSR y SSG con metaframeworks; se masifica Tailwind CSS y se afirma Vite; sin valor disponible.'],
+     [2024,'Stack Overflow: React 39,5%, TypeScript 38,5%. State of JS: TypeScript 89%, React 83%, Vue.js 48%, Next.js 46%.','React Server Components y foco en rendimiento (Core Web Vitals).'],
+     [2025,'Sin datos cuantitativos en la recopilación.','Svelte 5 (runes y señales, reactividad sin Virtual DOM), Turbopack y Vite como herramientas de construcción; componentes preparados para APIs de IA.']],
+ be:[[2021,'Python 48,24%; Node.js 47,12%; Java 35,35%; Go 9,55%; MySQL 50,18%; PostgreSQL 40,42%; Docker 48,85%; Kubernetes 18,22% (Stack Overflow 2021).','Microservicios, contenedores (Docker, Kubernetes), REST y GraphQL.'],
+     [2022,'Node.js 47,12%; Python 43,51%; Java 33,27%; Go 11,83%; PostgreSQL 43,59%; MySQL 46,85% (Stack Overflow 2022).','Expansión de Serverless (AWS Lambda, Google Cloud Functions); sin valor disponible.'],
+     [2023,'PostgreSQL 45,55%; MySQL 41,09%; Node.js 42,65%; Docker 52,98%; MongoDB 24,85%; Redis 22,2% (Stack Overflow 2023).','Cómputo en el borde (Cloudflare Workers, Vercel Edge Functions) y primeras apariciones de Pgvector; sin valor disponible.'],
+     [2024,'Stack Overflow: Python 51%, Node.js 40,8%, Go 13,8%, PostgreSQL 48,7%. State of Node: Node.js 72%. State of Databases: PostgreSQL 65%.','Bases de datos vectoriales en la infraestructura Back End.'],
+     [2025,'Sin datos cuantitativos en la recopilación.','Bun como runtime alternativo; Pgvector y Pinecone para flujos RAG; servicios de alta concurrencia en Rust y Go.']],
+ ia:[[2021,'Estudio NYU Tandon / Pomona CS: 37,35% de los programas válidos generados presentaba fallas de seguridad. Sin medición anual equivalente en Stack Overflow.','Technical Preview de GitHub Copilot (29 de junio), definido como «AI pair programmer»: sugiere líneas y funciones en el IDE (Python, JavaScript, TypeScript, Ruby y Go).'],
+     [2022,'Sin medición anual equivalente en las encuestas principales.','Disponibilidad general de Copilot (21 de junio) para desarrolladores individuales; autocompletado a partir del código abierto y de comentarios en lenguaje natural.'],
+     [2023,'Stack Overflow: 44% usa IA, 26% planea usarla (70%); Copilot más probada (44%); 83% experimentó con ChatGPT; 77% favorable; 42% confía en la precisión; 33% cita la productividad; 42,4% de quienes aprenden dice que acelera su aprendizaje.','Copilot, Copilot Chat y ChatGPT: diálogo sobre código, explicación de errores, pruebas unitarias y documentación inicial.'],
+     [2024,'Stack Overflow: 62% usa IA, 76% usa o planea usarla; 72% favorable; 43% confía; 31% escéptico; 45% ve dificultades en tareas complejas; 81% cita la productividad; 71% de estudiantes dice que acelera su aprendizaje; apoyo esperado en documentación (81%), pruebas (80%) y código (76%).','Copilot en sugerencias en línea y chat, Copilot para pull requests y ChatGPT.'],
+     [2025,'Stack Overflow: 84% usa o planea usar IA; 46% desconfía y 33% confía (3% confía mucho); 29% confía para tareas complejas (35% en 2024); 66% «casi correctas»; 45% depurar toma más tiempo; 81% preocupado por seguridad y privacidad.','Agentes de IA para repositorios: reciben una tarea, trabajan en una rama y preparan una propuesta de cambio (pull request) de forma semiautónoma y supervisada.']]
+};
+function buildTL(id,arr){
+  $('#tl-'+id).innerHTML=arr.map(r=>'<li><div class="y">'+r[0]+'</div><div class="body"><p><span class="tag tag-dato">Dato</span>'+r[1]+'</p><p><span class="tag tag-analisis" style="background:#F3F4F6;color:#374151">Contexto</span>'+r[2]+'</p></div></li>').join('');
+}
+
+/* ---------- tablas grandes ---------- */
+function buildTables(){
+  $('#tbl-fe-series').innerHTML=tbl(['Tecnología','2021','2022','2023','2024 (Stack Overflow)','2024 (State of JS)'],[
+    ['React','69,28%','68,19%',dash,'39,5%','83%'],['Vue.js','28,97%',dash,dash,dash,'48%'],['Angular',dash,'20,39%',dash,dash,dash],['Svelte',dash,'4,58%',dash,dash,dash],
+    ['Next.js',dash,dash,'13,52%',dash,'46%'],['JavaScript','64,96%',dash,dash,dash,dash],['TypeScript','30,19%','34,83%',dash,'38,5%','89%'],['Webpack','31,98%',dash,dash,dash,dash]
+  ],{num:true,caption:'— indica que la recopilación no trae valor para ese año. Las columnas de 2024 provienen de encuestas con poblaciones distintas.'});
+
+  $('#tbl-be-series').innerHTML=tbl(['Tecnología','2021','2022','2023','2024 (Stack Overflow)','2024 (otra encuesta)'],[
+    ['Node.js','47,12%','47,12%','42,65%','40,8%','72% (State of Node)'],['Python','48,24%','43,51%',dash,'51%',dash],['Java','35,35%','33,27%',dash,dash,dash],['Go','9,55%','11,83%',dash,'13,8%',dash],
+    ['PostgreSQL','40,42%','43,59%','45,55%','48,7%','65% (State of Databases)'],['MySQL','50,18%','46,85%','41,09%',dash,dash],['MongoDB',dash,dash,'24,85%',dash,dash],['Redis',dash,dash,'22,2%',dash,dash],
+    ['Docker','48,85%',dash,'52,98%',dash,dash],['Kubernetes','18,22%',dash,dash,dash,dash]
+  ],{num:true,caption:'— indica que la recopilación no trae valor para ese año.'});
+
+  const ND='<i>No disponible</i>';
+  $('#tbl-fe-tech').innerHTML=tbl(['Tecnología','Categoría','Años','Indicador y valor registrado','Fuente'],[
+    ['<b>React</b>','Librería / framework UI','2021, 2022, 2024','Adopción: 69,28% (2021), 68,19% (2022), 39,5% (2024, Stack Overflow); uso o interés 83% (2024, State of JS)','Stack Overflow / State of JS'],
+    ['<b>Vue.js</b>','Framework','2021, 2024','Adopción: 28,97% (2021); uso 48% (2024, State of JS)','Stack Overflow / State of JS'],
+    ['<b>Angular</b>','Framework','2022','Adopción: 20,39%','Stack Overflow'],
+    ['<b>Svelte</b>','Framework / compilador','2022, 2025','Adopción: 4,58% (2022); 2025: '+ND,'Stack Overflow / notas de versión de Svelte'],
+    ['<b>Next.js</b>','Metaframework','2023, 2024','Adopción: 13,52% (2023); uso 46% (2024, State of JS)','Stack Overflow / State of JS'],
+    ['<b>JavaScript</b>','Lenguaje','2021','Adopción: 64,96%','Stack Overflow'],
+    ['<b>TypeScript</b>','Lenguaje','2021, 2022, 2024','Adopción: 30,19%, 34,83%, 38,5% (2024, Stack Overflow); uso 89% (2024, State of JS)','Stack Overflow / State of JS'],
+    ['<b>Webpack</b>','Herramienta de construcción','2021','Adopción: 31,98%','Stack Overflow'],
+    ['<b>Vite</b>','Herramienta de construcción','2022, 2023, 2025','Indicador no especificado; valor '+ND,'Documentación de Vite'],
+    ['<b>Tailwind CSS</b>','Framework CSS','2023','Indicador no especificado; valor '+ND,'Documentación de Tailwind CSS'],
+    ['<b>Turbopack</b>','Herramienta de construcción','2025','Indicador no especificado; valor '+ND,'Vercel / documentación de Next.js']
+  ]);
+
+  $('#tbl-be-tech').innerHTML=tbl(['Tecnología','Categoría','Años','Indicador y valor registrado','Fuente'],[
+    ['<b>Node.js</b>','Runtime','2021–2024','Adopción: 47,12% (2021 y 2022), 42,65% (2023), 40,8% (2024, Stack Overflow); uso 72% (2024, State of Node)','Stack Overflow / State of Node'],
+    ['<b>Python</b>','Lenguaje','2021, 2022, 2024','Adopción: 48,24%, 43,51%, 51,0%','Stack Overflow'],
+    ['<b>Java</b>','Lenguaje','2021, 2022','Adopción: 35,35%, 33,27%','Stack Overflow'],
+    ['<b>Go</b>','Lenguaje','2021, 2022, 2024','Adopción: 9,55%, 11,83%, 13,8%','Stack Overflow'],
+    ['<b>PostgreSQL</b>','Base de datos relacional','2021–2024','Adopción: 40,42%, 43,59%, 45,55%, 48,7% (2024, Stack Overflow); uso 65% (2024, State of Databases)','Stack Overflow / State of Databases'],
+    ['<b>MySQL</b>','Base de datos relacional','2021, 2022, 2023','Adopción: 50,18%, 46,85%, 41,09%','Stack Overflow'],
+    ['<b>MongoDB</b>','Base de datos NoSQL','2023','Adopción: 24,85%','Stack Overflow'],
+    ['<b>Redis</b>','Base de datos / caché','2023','Adopción: 22,2%','Stack Overflow'],
+    ['<b>Docker</b>','Contenedores','2021, 2023','Adopción: 48,85%, 52,98%','Stack Overflow'],
+    ['<b>Kubernetes</b>','Orquestación','2021','Adopción: 18,22%','Stack Overflow'],
+    ['<b>AWS Lambda</b>','Plataforma serverless','2022','Indicador no especificado; valor '+ND,'Documentación de AWS'],
+    ['<b>Cloudflare Workers</b>','Edge computing','2023','Indicador no especificado; valor '+ND,'Documentación de Cloudflare'],
+    ['<b>Pgvector</b>','Base de datos vectorial','2023, 2025','Indicador no especificado; valor '+ND,'Documentación de Pgvector'],
+    ['<b>Pinecone</b>','Base de datos vectorial','2025','Indicador no especificado; valor '+ND,'Documentación de Pinecone'],
+    ['<b>Bun</b>','Runtime','2025','Indicador no especificado; valor '+ND,'Notas de versión de Bun']
+  ]);
+
+  $('#tbl-ia-tareas').innerHTML=tbl(['Tarea','Front End','Back End','Evolución documentada'],[
+    ['<b>Autocompletado y generación</b>','Componentes, HTML, CSS, hooks','Endpoints, consultas SQL, funciones, controladores','De sugerir líneas y funciones en el editor (2021–2022) a peticiones en lenguaje natural y agentes (2023–2025).'],
+    ['<b>Depuración y explicación</b>','Errores de DOM, estado y eventos','Errores de API, lógica de servidor y base de datos','Desde 2023, explicación de errores y sintaxis por chat. En 2025, el 45% indica que depurar código de IA puede tomar más tiempo que escribirlo.'],
+    ['<b>Pruebas y documentación</b>','Pruebas de UI y de componentes','Pruebas unitarias y de integración; OpenAPI','En 2024 se espera apoyo en documentación (81%) y pruebas (80%).'],
+    ['<b>Revisión de cambios</b>','Verificación de componentes visuales','Inspección de seguridad y contratos de API','Copilot para pull requests (2024); agentes en 2025 que preparan y revisan propuestas de cambio.'],
+    ['<b>Refactorización</b>','Reestructuración de componentes','Reestructuración de módulos y servicios','De ediciones locales a sugerencias sobre módulos completos para mejorar legibilidad y mantenibilidad.'],
+    ['<b>Aprendizaje</b>','Uso como tutor técnico','Uso como tutor técnico','Estudiantes que dicen que acelera su aprendizaje: 42,4% (2023) y 71% (2024).']
+  ]);
+}
+
+/* ---------- comparativa ---------- */
+let curYear='2021';
+function buildTabs(){
+  $('#ytabs').innerHTML=YEARS.map(y=>'<button type="button" role="tab" id="tab-'+y+'" data-y="'+y+'" aria-selected="false">'+y+'</button>').join('')+'<button type="button" role="tab" id="tab-all" data-y="all" aria-selected="false">Matriz completa</button>';
+  $$('#ytabs button').forEach(b=>b.addEventListener('click',()=>selectYear(b.getAttribute('data-y'))));
+  $('#ytabs').addEventListener('keydown',e=>{
+    const tabs=$$('#ytabs button');const i=tabs.indexOf(document.activeElement);if(i<0)return;
+    if(e.key==='ArrowRight'){e.preventDefault();const t=tabs[(i+1)%tabs.length];t.focus();selectYear(t.getAttribute('data-y'));}
+    if(e.key==='ArrowLeft'){e.preventDefault();const t=tabs[(i-1+tabs.length)%tabs.length];t.focus();selectYear(t.getAttribute('data-y'));}
+  });
+}
+function ul(a){return '<ul>'+a.map(x=>'<li>'+x+'</li>').join('')+'</ul>';}
+function selectYear(y){
+  y=String(y);curYear=y;
+  $$('#ytabs button').forEach(b=>{const on=b.getAttribute('data-y')===y;b.setAttribute('aria-selected',on?'true':'false');b.setAttribute('tabindex',on?'0':'-1');});
+  const p=$('#ypanel');p.setAttribute('aria-labelledby','tab-'+y);
+  if(y==='all'){
+    p.innerHTML=tbl(['Año','Front End','Back End','IA como soporte','Cambio principal observado (análisis)'],YEARS.map(k=>[
+      '<b>'+k+'</b>',ul(Y[k].fe),ul(Y[k].be),ul(Y[k].ia),Y[k].c]));
+  }else{
+    p.innerHTML='<div class="ycols"><div class="ycol fe"><h4>Front End</h4>'+ul(Y[y].fe)+'</div><div class="ycol be"><h4>Back End</h4>'+ul(Y[y].be)+'</div><div class="ycol ia"><h4>IA como soporte</h4>'+ul(Y[y].ia)+'</div></div>'+
+      '<div class="block b-analisis"><span class="tag tag-analisis">Cambio principal observado</span><p>'+Y[y].c+'</p></div>';
+  }
+}
+
+/* ---------- hallazgos ---------- */
+const CARDS=[
+ {a:'ia',b:'29 jun 2021',t:'GitHub presenta el Technical Preview de Copilot como «AI pair programmer».',s:[1]},
+ {a:'ia',b:'37,35%',t:'de los programas válidos generados por Copilot en un estudio de NYU Tandon presentaba vulnerabilidades o fallas de diseño de seguridad (2021, entorno de prueba).',s:[2]},
+ {a:'ia',b:'21 jun 2022',t:'Copilot pasa a estar disponible de forma general para desarrolladores individuales.',s:[3]},
+ {a:'ia',b:'44% y 70%',t:'En 2023, el 44% usaba IA y el 26% planeaba usarla (70% en total). Copilot fue la herramienta más probada (44%) y el 83% experimentó con ChatGPT.',s:[4]},
+ {a:'be',b:'45,55% vs 41,09%',t:'PostgreSQL frente a MySQL en Stack Overflow 2023. En 2021 y 2022, MySQL tenía el valor más alto (50,18% y 46,85%).',s:[10,11,4]},
+ {a:'ia',b:'42,4% y 71%',t:'de estudiantes o personas que aprenden indicó que la IA aceleraba su aprendizaje (2023 y 2024). Son dos mediciones; no se interpreta como aumento.',s:[4,5]},
+ {a:'ia',b:'62%',t:'usaba IA actualmente en 2024; el 76% la usaba o planeaba usarla.',s:[5]},
+ {a:'ia',b:'81% y 80%',t:'esperaba apoyo de la IA en documentación y en pruebas (2024). En escritura de código, 76%.',s:[5]},
+ {a:'fe',b:'30,19% a 38,5%',t:'TypeScript en Stack Overflow (30,19% en 2021, 34,83% en 2022, 38,5% en 2024). En State of JS 2024 alcanza 89%; ambas encuestas no son comparables entre sí.',s:[10,11,5,8]},
+ {a:'ia',b:'84%',t:'usaba o planeaba usar herramientas de IA en 2025.',s:[6]},
+ {a:'ia',b:'46% vs 33%',t:'desconfiaba y confiaba, respectivamente, en la precisión de las herramientas de IA (2025).',s:[6]},
+ {a:'ia',b:'66% y 45%',t:'señaló las respuestas «casi correctas» como su mayor frustración y consideró que depurar código de IA puede tomar más tiempo que escribirlo (2025).',s:[6]},
+ {a:'ia',b:'81%',t:'expresó preocupación por seguridad y privacidad al usar agentes de IA sobre repositorios (2025).',s:[6]}
+];
+const AXN={fe:'Front End',be:'Back End',ia:'IA'};
+function buildCards(f){
+  $('#cards').innerHTML=CARDS.filter(c=>f==='all'||c.a===f).map(c=>'<article class="card '+c.a+'"><div class="big">'+c.b+'</div><p>'+c.t+'</p><p class="src"><span class="tag tag-dato">Dato</span> '+AXN[c.a]+'. Fuente: '+c.s.map(n=>'<a href="#fuente-'+n+'">['+n+']</a>').join(' ')+'</p></article>').join('');
+}
+function buildChips(){
+  $$('#chips button').forEach(b=>b.addEventListener('click',()=>{
+    $$('#chips button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');buildCards(b.getAttribute('data-f'));}));
+}
+
+/* ---------- fuentes ---------- */
+function buildSources(){
+  $('#tbl-src tbody').innerHTML=SRC.map(s=>'<tr id="fuente-'+s.n+'" data-s="'+esc((s.f+' '+s.y+' '+s.t+' '+s.i).toLowerCase())+'"><td class="n">'+s.n+'</td><td>'+esc(s.f)+'</td><td>'+esc(s.y)+'</td><td>'+esc(s.t)+'</td><td class="url">'+(s.u?'<a href="'+s.u+'" target="_blank" rel="noopener">'+s.u+'</a>':'<span class="dim">No especificada</span>')+'</td><td>'+esc(s.i)+'</td></tr>').join('');
+  $('#q').addEventListener('input',e=>{
+    const q=e.target.value.trim().toLowerCase();let vis=0;
+    $$('#tbl-src tbody tr').forEach(r=>{const ok=!q||r.getAttribute('data-s').indexOf(q)>-1;r.hidden=!ok;if(ok)vis++;});
+    $('#nores').hidden=vis>0;
+  });
+}
+
+/* ---------- navegación activa ---------- */
+function navSpy(){
+  const links=$$('#navlist a');const secs=links.map(a=>document.getElementById(a.getAttribute('href').slice(1)));
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(s=>s&&io.observe(s));
+}
+
+/* ---------- inicio ---------- */
+buildMap();
+['fe','be','ia'].forEach(k=>buildTL(k,TL[k]));
+buildTables();
+defineCharts();
+buildTabs();selectYear('2021');
+buildCards('all');buildChips();
+buildSources();
+navSpy();
+
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{Object.keys(CH).forEach(k=>{if(CH[k].type!=='hbar')draw(CH[k]);});},150);});
+})();
+</script>
+</body>
+</html>
